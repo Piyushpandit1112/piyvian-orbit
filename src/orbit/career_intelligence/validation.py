@@ -1,13 +1,17 @@
-job = {
-    "title": "Python Developer",
-    "company": "ABC Technologies",
-    "location": "Berlin",
-    "job_url": "https://example.com/jobs/123"
-}
+
+def get_validation_errors(job):
+    errors = []
+
+    required_fields = ["title", "company", "job_url"]
+
+    for field in required_fields:
+        value = job.get(field)
+
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{field} is missing or empty")
+
+    return errors
+
 
 def validate_job(job):
-    required_fields = ["title", "company", "job_url"]
-    for field in required_fields:
-        if field not in job or not job[field].strip():
-            return False
-    return True
+    return not get_validation_errors(job)
